@@ -55,10 +55,23 @@ Mapa* cria(void) {
 	return m;
 }
 
-Mapa* insere(Mapa* m, char* chave, int dados) {
-	if (m->ocupadas > 0.75 * m->tam) {
-		redimensiona(m);
+int insere(Mapa* m, int c, int d) {
+
+	int key = hash(c);
+
+	if (m->tabpos[key].chave == -1) {
+		m->tabpos[key].chave = c;
+		m->tabpos[key].dados = d;
+		m->ocupadas++;
+		return c;
 	}
-	unsigned int pos = hash(chave);
+
+	else {
+		while (m->tabpos[key].prox != -1) {
+
+		}
+	}
+
+
 }
 
