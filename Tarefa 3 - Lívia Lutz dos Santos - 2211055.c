@@ -1,5 +1,5 @@
 
-/* Lívia Lutz dos Santos - 2211055 */
+/* LÃ­via Lutz dos Santos - 2211055 */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -48,15 +48,17 @@ int main(void) {
 
 	f = fopen("Placas.txt", "r");
 
-	for (int j = 0; j < 128; j++) {
+	for (int j = 0; j < 512; j++) {
 
-		fread(placa, sizeof(placa), 1, f);
+		fread(placa,sizeof(placa), 1, f);
 
+		placa[7] = '\0';
 
-		insere(m, placa, 1);
+		c += insere(m,j,placa);
 	
 	}
 
+	printf("%d\n", c);
 
 	fclose(f);
 
