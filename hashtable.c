@@ -58,19 +58,28 @@ Mapa* cria(void) {
 int insere(Mapa* m, int c, int d) {
 
 	int key = hash(c);
-
-	if (m->tabpos[key].chave == -1) {
-		m->tabpos[key].chave = c;
-		m->tabpos[key].dados = d;
+	tabpos p = m->tabpos[key];
+	int col = 0, i = 1;
+	
+	if (p.chave == -1) {
+		p.chave = c;
+		p.dados = d;
 		m->ocupadas++;
-		return c;
+		return col;
 	}
-
-	else {
-		while (m->tabpos[key].prox != -1) {
-
+	for ( m->tabpos[key + i].chave != -1; i++){
+		col++;
+		if((key + i) == 1030){
+			printf("Erro ao inserir.\n");
+			return col;
 		}
 	}
+	m->tabpos[key + i].chave = c;
+	m->tabpos[key + i].dados = d;
+	m->tabpos[key + i].prox = p.prox;
+	p.prox = key + i;
+	m->ocupadas++;
+	return col;
 
 
 }
