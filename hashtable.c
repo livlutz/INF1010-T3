@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "hashtable.h"
 
 #define TAMINICIAL 1031 //primo após 1024 
