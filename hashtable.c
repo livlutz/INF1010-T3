@@ -1,5 +1,6 @@
 
 /* Livia Lutz dos Santos - 2211055 */
+/* Luiza Marcondes Paes Leme - 2210275 */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -56,25 +57,25 @@ Mapa* cria(void) {
 
 int insere(Mapa* m, int c, char* d) {
 
-	int key = hash(c);
+	int pos = hash(c);
 	int col = 0, i = 1;
 
-	if (m->tabpos[key].chave == -1) {
-		m->tabpos[key].chave = c;
-		strcpy(m->tabpos[key].dados, d);
+	if (m->tabpos[pos].chave == -1) {
+		m->tabpos[pos].chave = c;
+		strcpy(m->tabpos[pos].dados, d);
 		return col;
 	}
-	for (; m->tabpos[key + i].chave != -1; i++) {
+	for (; m->tabpos[pos + i].chave != -1; i++) {
 		col++;
-		if ((key + i) == 1030) {
+		if ((pos + i) == 1030) {
 			printf("Erro ao inserir.\n");
 			return col;
 		}
 	}
-	m->tabpos[key + i].chave = c;
-	strcpy(m->tabpos[key + i].dados, d);
-	m->tabpos[key + i].prox = p.prox;
-	m->tabpos[key].prox = key + i;
+	m->tabpos[pos + i].chave = c;
+	strcpy(m->tabpos[pos + i].dados, d);
+	m->tabpos[pos + i].prox = p.prox;
+	m->tabpos[pos].prox = pos + i;
 	return col;
 }
 
