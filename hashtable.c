@@ -79,3 +79,28 @@ int insere(Mapa* m, int c, char* d) {
 	return col;
 }
 
+int busca(Mapa*m,int c){
+
+	int pos = hash(c);
+	int i = 1;
+
+	if (m->tabpos[pos].chave == c) {
+		return pos;
+	}
+
+	else {
+		for (; m->tabpos[pos+i].prox != -1; i++) {
+			if (m->tabpos[pos + i].chave == c) {
+				return pos + i;
+			}
+		}
+	}
+
+	if (m->tabpos[pos + i].chave == c) {
+		return pos + i;
+	}
+
+	return -1;
+	
+}
+
