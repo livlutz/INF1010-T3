@@ -14,7 +14,14 @@ int main(void) {
 	char placa[8];
 
 	char c1,c2,c3,n,ch;
+	
+	int c = 0,j=0;
+
+	double elapsed,elapsed1;
+	
 	FILE* f;
+	
+	clock_t t0, t1,t2,t3;
 
 	f = fopen("Placas.txt", "w");
 
@@ -47,8 +54,10 @@ int main(void) {
 
 
 	f = fopen("Placas.txt", "r");
+	
+	t0 = clock();
 
-	for (int j = 0; j < 512; j++) {
+	for (; j < 512; j++) {
 
 		fread(placa,sizeof(placa), 1, f);
 
@@ -57,10 +66,26 @@ int main(void) {
 		c += insere(m,j,placa);
 	
 	}
+	
+	printf("%d colisoes para %d placas\n", c, j);
 
-	printf("%d\n", c);
+	t1 = clock();
 
 	fclose(f);
+
+	elapsed = 1000 * ((double)t1 - (double)t0 / CLOCKS_PER_SEC);
+	printf("tempo usado pra inserir em milisegundos: %f\n", elapsed);
+
+	t2 = clock();
+
+	for (; j < 512; j++) {
+		c = busca(m, j);
+	}
+
+	t3 = clock();
+
+	elapsed1 = 100 * ((double)t3 - (double)t2 / CLOCKS_PER_SEC);
+	printf("tempo usado para buscar todos os elementos em mililsegundos: %f\n", elapsed1);
 
 	return 0;
 }
