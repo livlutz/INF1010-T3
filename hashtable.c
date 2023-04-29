@@ -57,12 +57,11 @@ Mapa* cria(void) {
 int insere(Mapa* m, int c, char* d) {
 
 	int key = hash(c);
-	ttabpos p = m->tabpos[key];
 	int col = 0, i = 1;
 
-	if (p.chave == -1) {
-		p.chave = c;
-		strcpy(p.dados, d);
+	if (m->tabpos[key].chave == -1) {
+		m->tabpos[key].chave = c;
+		strcpy(m->tabpos[key].dados, d);
 		return col;
 	}
 	for (; m->tabpos[key + i].chave != -1; i++) {
@@ -75,7 +74,7 @@ int insere(Mapa* m, int c, char* d) {
 	m->tabpos[key + i].chave = c;
 	strcpy(m->tabpos[key + i].dados, d);
 	m->tabpos[key + i].prox = p.prox;
-	p.prox = key + i;
+	m->tabpos[key].prox = key + i;
 	return col;
 }
 
