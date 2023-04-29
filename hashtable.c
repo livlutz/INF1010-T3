@@ -18,7 +18,6 @@ typedef struct {
 
 struct smapa {
 	int tam;
-	int ocupadas;
 	ttabpos* tabpos;
 };
 
@@ -46,7 +45,6 @@ Mapa* cria(void) {
 	}
 
 	m->tam = TAMINICIAL;
-	m->ocupadas = 0;
 
 	for (i = 0; i < TAMINICIAL; i++) {
 		m->tabpos[i].chave = -1;
