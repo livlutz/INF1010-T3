@@ -10,8 +10,8 @@
 //encadeamento interior
 
 typedef struct {
-	char chave[8];
-	int dados;
+	int chave;
+	char dados[8];
 	int prox;
 } ttabpos;
 
@@ -58,7 +58,7 @@ Mapa* cria(void) {
 int insere(Mapa* m, int c, int d) {
 
 	int key = hash(c);
-	tabpos p = m->tabpos[key];
+	ttabpos p = m->tabpos[key];
 	int col = 0, i = 1;
 	
 	if (p.chave == -1) {
@@ -67,7 +67,7 @@ int insere(Mapa* m, int c, int d) {
 		m->ocupadas++;
 		return col;
 	}
-	for ( m->tabpos[key + i].chave != -1; i++){
+	for (;m->tabpos[key + i].chave != -1; i++){
 		col++;
 		if((key + i) == 1030){
 			printf("Erro ao inserir.\n");
