@@ -60,27 +60,25 @@ int insere(Mapa* m, int c, int d) {
 	int key = hash(c);
 	ttabpos p = m->tabpos[key];
 	int col = 0, i = 1;
-	
+
 	if (p.chave == -1) {
 		p.chave = c;
-		p.dados = d;
+		strcpy(p.dados, d);
 		m->ocupadas++;
 		return col;
 	}
-	for (;m->tabpos[key + i].chave != -1; i++){
+	for (; m->tabpos[key + i].chave != -1; i++) {
 		col++;
-		if((key + i) == 1030){
+		if ((key + i) == 1030) {
 			printf("Erro ao inserir.\n");
 			return col;
 		}
 	}
 	m->tabpos[key + i].chave = c;
-	m->tabpos[key + i].dados = d;
+	strcpy(m->tabpos[key + i].dados, d);
 	m->tabpos[key + i].prox = p.prox;
 	p.prox = key + i;
 	m->ocupadas++;
 	return col;
-
-
 }
 
