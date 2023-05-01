@@ -161,7 +161,7 @@ int main(void) {
 
 	t0 = clock();
 
-	//para 128 placas
+	//para 256 placas
 
 	for (j = 0; j < 256; j++) {
 
