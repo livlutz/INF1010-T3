@@ -9,135 +9,280 @@
 #include "hashtable.h"
 
 int main(void) {
-	
-	//Array de dígitos das placas
+
+	//caracteres de numeros nas placas
 
 	char numerais[10] = { '0','1','2','3','4','5','6','7','8','9'};
-	
-	// String correspondente à placa de cada carro
 
-	char placa[8];
+	//placa do carro
 	
-	//Caracteres para guardar cada char da string placa
+	char placa[8];
+
+	//caracteres a serem inseridos em placas
 
 	char c1,c2,c3,n,ch;
-	
-	//Inteiros de contadores de colisão e número de placas, respectivamente
-	
-	int c = 0,j = 0;
-	
-	// Variaveis para calcular o tempo passado
 
-	double elapsed,elapsed1;
-	
-	//Ponteiro para arquivo
-	
+	//variaveis contadoras
+
+	int c = 0,j,d = 0,e = 0;
+
+	//variaveis para calcular o tempo total
+
+	double elapsed,elapsed1,elapsed2;
+
+	//arquivo
+
 	FILE* f;
-	
-	//Variaveis para guardar tempo
-	
-	clock_t t0, t1,t2,t3;
-	
-	//Abrindo o arquivo para escrever as placas de carros geradas aleatoriamente
+
+	//variaveis de tempo
+
+	clock_t t0,t1,t2,t3;
+
+	//abrindo o arquivo para escrita
 
 	f = fopen("Placas.txt", "w");
-	
-	//Mexendo no tempo, assim a função rand gera números aleatoriamente
+
+	//tornando a funcao rand() completamente aleatoria
 
 	srand(time(NULL));
-	
-	//Para 128 placas
 
-	for (int i = 0; i < 128; i++) {
-		//as 3 primeiras variaveis geram 1 caracter entre 'A' e 'Z'
+	//inserindo as placas no arquivo
+
+	for (int i = 0; i < 512; i++) {
+
+		//gera 3 caracteres ASCII e inclui em placas
 		
 		c1 = rand() % 26 + 65;
 		c2 = rand() % 26 + 65;
 		c3 = rand() % 26 + 65;
 		placa[0] = '\0';
-		
-		//concatenamos os 3 caracteres em placas
-		
 		strncat(placa, &c1, 1);
 		strncat(placa, &c2, 1);
 		strncat(placa, &c3, 1);
-		
-		//geramos 4 números aleatórios e concatenamos em placas
+
+		//gera 4 caracteres numericos e insere em placas
 
 		for (int i = 0; i < 4; i++) {
 			n = numerais[rand() % 10];
 			strncat(placa, &n,1);
 		}
-		
-		//Escrevemos cada string no arquivo com enter 
+
+		//escreve a placa no arquivo
 
 		fwrite(&placa,sizeof(placa)-1, 1, f);
 		ch = '\n';
 		fwrite(&ch, sizeof(ch), 1, f);
 
 	}
-	
-	//Fecha o arquivo de placas
+
+	//fecha o arquivo
 
 	fclose(f);
-	
-	//Cria uma hash table
+
+	//cria os mapas para cada teste
 
 	Mapa* m = cria();
-	
-	//Abre o arquivo de placas para leitura
+	Mapa* m1 = cria();
+	Mapa* m2 = cria();
+
+	// ------------------------- 128 placas ----------------------//
+
+	//abre o arquivo para leitura
 
 	f = fopen("Placas.txt", "r");
-	
-	//Inicializa a contagem do tempo para inserir cada placa na hashtable
-	
-	t0 = clock();
-	
-	//Para todas as placas no arquivo, inserimos contando o numero de colisões
 
-	for (; j < 128; j++) {
+	//comeca a contar o tempo de insercao
+
+	t0 = clock();
+
+	//para 128 placas
+
+	for (j = 0; j < 128; j++) {
+
+		//le a placa do arquivo
 
 		fread(placa,sizeof(placa), 1, f);
 
 		placa[7] = '\0';
 
+		//insere a placa no mapa
+
 		c += insere(m,j,placa);
-	
+
 	}
-	
-	//Para a contagem do tempo de inserir
+
+	//termina a contagem
 
 	t1 = clock();
-	
-	//Fecha o arquivo
+
+	printf("%d colisoes para 128 placas\n", c);
+
+	//fecha o arquivo
 
 	fclose(f);
-	
-	//Exibe o número de colisões
-	
-	printf("%d colisoes para %d placas\n", c, j);
-	
-	//Calcula o tempo total, exibindo seu resultado em milisegundos
+
+	//calcula o tempo total de insercao
 
 	elapsed = 1000 * ((double)t1 - (double)t0 / CLOCKS_PER_SEC);
-	printf("tempo usado pra inserir em milisegundos: %f\n", elapsed);
-	
-	//Começa a contagem do tempo de busca de cada chave
+	printf("tempo usado pra inserir 128 placas em milisegundos: %.2f\n",elapsed);
+
+	//comeca a contar o tempo de busca
 
 	t2 = clock();
 
-	for (; j < 512; j++) {
+	//busca cada placa no mapa
+
+	for (j = 0; j < 128; j++) {
 		c = busca(m, j);
 	}
-	
-	//Para a contagem do tempo de busca
+
+	//termina a contagem do tempo de busca
 
 	t3 = clock();
-	
-	//Calcula o tempo de busca em milisegundos e exibe seu valor
+
+	//calcula o tempo total de busca
 
 	elapsed1 = 100 * ((double)t3 - (double)t2 / CLOCKS_PER_SEC);
-	printf("tempo usado para buscar todos os elementos em mililsegundos: %f\n", elapsed1);
+	printf("tempo usado para buscar 128 placas em mililsegundos:%.2f\n", elapsed1);
+	
+	//calcula o tempo total de busca + insercao
+	
+	elapsed2 = elapsed + elapsed1;
+
+	printf("Tempo de busca e insercao de 128 placas em ms: %.2f\n", elapsed2);
+
+
+	// --------------------- 256 placas ---------------------//
+
+
+	f = fopen("Placas.txt", "r");
+
+	//comeca a contar o tempo de insercao
+
+	t0 = clock();
+
+	//para 128 placas
+
+	for (j = 0; j < 256; j++) {
+
+		//le a placa do arquivo
+
+		fread(placa, sizeof(placa), 1, f);
+
+		placa[7] = '\0';
+
+		//insere a placa no mapa
+
+		d += insere(m1, j, placa);
+
+	}
+
+	//termina a contagem
+
+	t1 = clock();
+
+	printf("%d colisoes para 256 placas\n", d);
+
+	//fecha o arquivo
+
+	fclose(f);
+
+	//calcula o tempo total de insercao
+
+	elapsed = 1000 * ((double)t1 - (double)t0 / CLOCKS_PER_SEC);
+	printf("tempo usado pra inserir 256 placas em milisegundos: %.2f\n",elapsed);
+
+	//comeca a contar o tempo de busca
+
+	t2 = clock();
+
+	//busca cada placa no mapa
+
+	for (j = 0; j < 256; j++) {
+		d = busca(m1, j);
+	}
+
+	//termina a contagem do tempo de busca
+
+	t3 = clock();
+
+	//calcula o tempo total de busca
+
+	elapsed1 = 100 * ((double)t3 - (double)t2 / CLOCKS_PER_SEC);
+	printf("tempo usado para buscar 256 placas em mililsegundos:%.2f\n", elapsed1);
+
+	//calcula o tempo total de busca + insercao
+
+	elapsed2 = elapsed + elapsed1;
+
+	printf("Tempo de busca e insercao de 256 placas em ms: %.2f\n", elapsed2);
+
+
+	// ----------------------------- 512 placas --------------------//
+
+
+	f = fopen("Placas.txt", "r");
+
+	//comeca a contar o tempo de insercao
+
+	t0 = clock();
+
+	//para 512 placas
+
+	for (j = 0; j < 512; j++) {
+
+		//le a placa do arquivo
+
+		fread(placa, sizeof(placa), 1, f);
+
+		placa[7] = '\0';
+
+		//insere a placa no mapa
+
+		e += insere(m2, j, placa);
+
+	}
+
+	//termina a contagem
+
+	t1 = clock();
+
+	printf("%d colisoes para 512 placas\n", e);
+
+	//fecha o arquivo
+
+	fclose(f);
+
+	//calcula o tempo total de insercao
+
+	elapsed = 1000 * ((double)t1 - (double)t0 / CLOCKS_PER_SEC);
+	printf("tempo usado pra inserir 512 placas em milisegundos: %.2f\n",elapsed);
+
+	//comeca a contar o tempo de busca
+
+	t2 = clock();
+
+	//busca cada placa no mapa
+
+	for (j = 0; j < 512; j++) {
+		e = busca(m2, j);
+	}
+
+	//termina a contagem do tempo de busca
+
+	t3 = clock();
+
+	//calcula o tempo total de busca
+
+	elapsed1 = 100 * ((double)t3 - (double)t2 / CLOCKS_PER_SEC);
+	printf("tempo usado para buscar 512 placas em mililsegundos:%.2f\n", elapsed1);
+
+	//calcula o tempo total de busca + insercao
+
+	elapsed2 = elapsed + elapsed1;
+
+	printf("Tempo de busca e insercao de 512 placas em ms: %.2f\n", elapsed2);
+
 
 	return 0;
 }
