@@ -153,11 +153,18 @@ int busca(Mapa*m,int c){
 }
 
 int exclui(Mapa*m,int c){
+	//buscamos a posição na qual o elemento a ser removido está
 	int pos = busca(m, c);
+	
+	//caso não seja encontrado, a função retorna -1
 	if (pos == -1)
 		return -1;
+	
+	//senão definimos seu valor de chave como -1 e como não há placas, a string é alterada para \0
 	m->tabpos[pos].chave = -1;
 	strcpy(m->tabpos[pos].dados, "\0");
+	
+	//retorna a posição do elemento removido
 	return pos;
 }
 
