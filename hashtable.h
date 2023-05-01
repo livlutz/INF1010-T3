@@ -24,3 +24,7 @@ int hash(int key);
 //Função que busca uma chave de placa na hash table
 
 int busca(Mapa* m, int c);
+
+//Função que exclui uma chave da hashtable
+
+int exclui(Mapa* m, int c);
