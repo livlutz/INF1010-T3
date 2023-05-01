@@ -152,3 +152,12 @@ int busca(Mapa*m,int c){
 	
 }
 
+int exclui(Mapa*m,int c){
+	int pos = busca(m, c);
+	if (pos == -1)
+		return -1;
+	m->tabpos[pos].chave = -1;
+	strcpy(m->tabpos[pos].dados, "\0");
+	return pos;
+}
+
