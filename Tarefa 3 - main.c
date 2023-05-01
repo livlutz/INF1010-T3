@@ -28,7 +28,7 @@ int main(void) {
 
 	//variaveis para calcular o tempo total
 
-	double elapsed,elapsed1,elapsed2;
+	double elapsed,elapsed1,elapsed2,elapsed3,elapsed4,elapsed5,elapsed6,elapsed7,elapsed8;
 
 	//arquivo
 
@@ -36,7 +36,7 @@ int main(void) {
 
 	//variaveis de tempo
 
-	clock_t t0,t1,t2,t3;
+	clock_t t0,t1,t2,t3,t4,t5,t6,t7,t8,t9,t10;
 
 	//abrindo o arquivo para escrita
 
@@ -89,6 +89,7 @@ int main(void) {
 
 	//abre o arquivo para leitura
 
+
 	f = fopen("Placas.txt", "r");
 
 	//comeca a contar o tempo de insercao
@@ -124,7 +125,7 @@ int main(void) {
 	//calcula o tempo total de insercao
 
 	elapsed = 1000 * ((double)t1 - (double)t0 / CLOCKS_PER_SEC);
-	printf("tempo usado pra inserir 128 placas em milisegundos: %.2f\n",elapsed);
+	printf("Tempo usado pra inserir 128 placas em milisegundos: %.2f\n",elapsed);
 
 	//comeca a contar o tempo de busca
 
@@ -143,7 +144,7 @@ int main(void) {
 	//calcula o tempo total de busca
 
 	elapsed1 = 100 * ((double)t3 - (double)t2 / CLOCKS_PER_SEC);
-	printf("tempo usado para buscar 128 placas em mililsegundos:%.2f\n", elapsed1);
+	printf("Tempo usado para buscar 128 placas em mililsegundos:%.2f\n", elapsed1);
 	
 	//calcula o tempo total de busca + insercao
 	
@@ -159,9 +160,9 @@ int main(void) {
 
 	//comeca a contar o tempo de insercao
 
-	t0 = clock();
+	t3 = clock();
 
-	//para 256 placas
+	//para 128 placas
 
 	for (j = 0; j < 256; j++) {
 
@@ -179,7 +180,7 @@ int main(void) {
 
 	//termina a contagem
 
-	t1 = clock();
+	t4 = clock();
 
 	printf("%d colisoes para 256 placas\n", d);
 
@@ -189,12 +190,12 @@ int main(void) {
 
 	//calcula o tempo total de insercao
 
-	elapsed = 1000 * ((double)t1 - (double)t0 / CLOCKS_PER_SEC);
-	printf("tempo usado pra inserir 256 placas em milisegundos: %.2f\n",elapsed);
+	elapsed3 = 1000 * ((double)t4 - (double)t3 / CLOCKS_PER_SEC);
+	printf("Tempo usado pra inserir 256 placas em milisegundos: %.2f\n",elapsed3);
 
 	//comeca a contar o tempo de busca
 
-	t2 = clock();
+	t5 = clock();
 
 	//busca cada placa no mapa
 
@@ -204,18 +205,18 @@ int main(void) {
 
 	//termina a contagem do tempo de busca
 
-	t3 = clock();
+	t6 = clock();
 
 	//calcula o tempo total de busca
 
-	elapsed1 = 100 * ((double)t3 - (double)t2 / CLOCKS_PER_SEC);
-	printf("tempo usado para buscar 256 placas em mililsegundos:%.2f\n", elapsed1);
+	elapsed4 = 100 * ((double)t6 - (double)t5 / CLOCKS_PER_SEC);
+	printf("Tempo usado para buscar 256 placas em mililsegundos:%.2f\n", elapsed4);
 
 	//calcula o tempo total de busca + insercao
 
-	elapsed2 = elapsed + elapsed1;
+	elapsed5 = elapsed3 + elapsed4;
 
-	printf("Tempo de busca e insercao de 256 placas em ms: %.2f\n", elapsed2);
+	printf("Tempo de busca e insercao de 256 placas em ms: %.2f\n", elapsed5);
 
 
 	// ----------------------------- 512 placas --------------------//
@@ -225,7 +226,7 @@ int main(void) {
 
 	//comeca a contar o tempo de insercao
 
-	t0 = clock();
+	t7 = clock();
 
 	//para 512 placas
 
@@ -245,7 +246,7 @@ int main(void) {
 
 	//termina a contagem
 
-	t1 = clock();
+	t8 = clock();
 
 	printf("%d colisoes para 512 placas\n", e);
 
@@ -255,12 +256,12 @@ int main(void) {
 
 	//calcula o tempo total de insercao
 
-	elapsed = 1000 * ((double)t1 - (double)t0 / CLOCKS_PER_SEC);
-	printf("tempo usado pra inserir 512 placas em milisegundos: %.2f\n",elapsed);
+	elapsed6 = 1000 * ((double)t8 - (double)t7 / CLOCKS_PER_SEC);
+	printf("Tempo usado pra inserir 512 placas em milisegundos: %.2f\n",elapsed6);
 
 	//comeca a contar o tempo de busca
 
-	t2 = clock();
+	t9 = clock();
 
 	//busca cada placa no mapa
 
@@ -270,18 +271,18 @@ int main(void) {
 
 	//termina a contagem do tempo de busca
 
-	t3 = clock();
+	t10 = clock();
 
 	//calcula o tempo total de busca
 
-	elapsed1 = 100 * ((double)t3 - (double)t2 / CLOCKS_PER_SEC);
-	printf("tempo usado para buscar 512 placas em mililsegundos:%.2f\n", elapsed1);
+	elapsed7 = 100 * ((double)t10 - (double)t9 / CLOCKS_PER_SEC);
+	printf("Tempo usado para buscar 512 placas em mililsegundos:%.2f\n", elapsed7);
 
 	//calcula o tempo total de busca + insercao
 
-	elapsed2 = elapsed + elapsed1;
+	elapsed8 = elapsed7 + elapsed6;
 
-	printf("Tempo de busca e insercao de 512 placas em ms: %.2f\n", elapsed2);
+	printf("Tempo de busca e insercao de 512 placas em ms: %.2f\n", elapsed8);
 
 
 	return 0;
